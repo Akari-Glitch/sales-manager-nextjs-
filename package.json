@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@algolia/autocomplete-core": "^1.7.1",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
     "next": "12.1.6",
+    "pg": "^8.7.3",
     "react": "18.1.0",
     "react-dom": "18.1.0"
   },
   "devDependencies": {
     "@types/node": "17.0.34",
+    "@types/pg": "^8.6.5",
     "@types/react": "18.0.9",
     "@types/react-dom": "18.0.4",
     "eslint": "8.15.0",
