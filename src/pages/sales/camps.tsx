@@ -13,16 +13,38 @@ interface Props {
 function Camps({ idCamps, inventory, exchange_rate }: Props) {
   const { sale, setSale } = useContext(SaleContext);
   const [showArticles, setShowArticles] = useState(false)
+  let inventoryArticles: string[] = [];
+  for (let i = 0; i < inventory.length; i++) {
+    inventoryArticles.push(inventory[i].article)
+  }
+  let [filterArticles, setFilterArticles] = useState([...inventoryArticles])
+
   const handleChange = ({
     target: { name, value },
   }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (name === "amount") {
       sale.amount[idCamps - 1] = Number(value)
     }
+
+    if (name === "articles") {
+      sale.articles[idCamps - 1] = value;
+      filterArticles = [...inventoryArticles]
+      for (let i = 0; i < filterArticles.length; i++) {
+
+        if (!(filterArticles[i].indexOf(String(sale.articles[idCamps - 1])) > -1)) {
+          filterArticles.splice(i, 1)
+        }
+      }
+      setFilterArticles(filterArticles)
+      priceDolar(value)
+    }
+
+
     setSale(sale)
     changeValues();
 
   };
+
 
   function changeValues() {
     sale.price_bs[idCamps - 1] = Number(exchange_rate[0].exchange_rate) * Number(sale.price_dolar[idCamps - 1]);
@@ -82,6 +104,13 @@ function Camps({ idCamps, inventory, exchange_rate }: Props) {
     return totalBs;
   }
 
+  function priceDolar(value: string) {
+    for (let i = 0; i < inventory.length; i++) {
+      if (inventory[i].article === value) {
+        sale.price_dolar[idCamps - 1] = inventory[i].price_dolar
+      }
+    }
+  }
   const handleOption = (e: MouseEvent<HTMLLIElement>) => {
     const element = e.target as HTMLElement;
     const value: string = element.id;
@@ -89,14 +118,8 @@ function Camps({ idCamps, inventory, exchange_rate }: Props) {
     const input = document.getElementById("article" + idCamps) as HTMLInputElement
     input.value = value;
 
-    function priceDolar() {
-      for (let i = 0; i < inventory.length; i++) {
-        if (inventory[i].article === value) {
-          sale.price_dolar[idCamps - 1] = inventory[i].price_dolar
-        }
-      }
-    }
-    priceDolar()
+
+    priceDolar(value)
     changeValues()
   }
 
@@ -105,6 +128,7 @@ function Camps({ idCamps, inventory, exchange_rate }: Props) {
       setShowArticles(false)
     }, 100)
   }
+
   return (
 
     <StylesCamps id={"camps" + idCamps}>
@@ -123,10 +147,11 @@ function Camps({ idCamps, inventory, exchange_rate }: Props) {
 
         </input>
         <ul className={showArticles ? "list" : "list-none"} id={"list" + idCamps}>
-          {inventory.map(article => {
+          {filterArticles.map(article => {
             return (<>
-              <li key={`id` + article.article} id={article.article} onClick={handleOption}>{article.article}</li>
+              <li key={`id` + article} id={article} onClick={handleOption}>{article}</li>
             </>)
+
           })}
         </ul>
       </td>
