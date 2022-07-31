@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { SaleContext, ContextProps } from "./SaleContext"
 import { Sale } from "../interfaces/Sale";
 
@@ -20,8 +20,13 @@ interface Props {
 export const SaleProvider = ({ children }: Props) => {
   const [sale, setSale] = useState(inititalState);
 
+  const value = useMemo(() => {
+
+    return ({ sale, setSale })
+  }, [sale])
+
   return (
-    <SaleContext.Provider value={{ sale, setSale } as ContextProps}>
+    <SaleContext.Provider value={value as ContextProps}>
       {children}
     </SaleContext.Provider >
   );

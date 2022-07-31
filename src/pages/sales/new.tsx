@@ -12,12 +12,17 @@ export interface Props {
 }
 
 export default function New({ inventory, exchange_rate }: Props) {
-
   const router = useRouter();
   const { sale, setSale } = useContext(SaleContext);
-  const [camps, setCamps] = useState([
+
+  useEffect(() => {
+    if (typeof router.query.id === "string") loadSale(router.query.id);
+  }, [router.query]);
+
+  let [camps, setCamps] = useState([
     <Camps key={"key" + 1} idCamps={1} inventory={inventory} exchange_rate={exchange_rate}></Camps>,
   ]);
+
   const handleChange = ({
     target: { name, value },
   }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -34,7 +39,6 @@ export default function New({ inventory, exchange_rate }: Props) {
   };
 
   const createSale = async (sale: Sale) => {
-    console.log(sale)
     await fetch("http://localhost:3000/api/sales", {
       method: "POST",
       headers: {
@@ -45,7 +49,7 @@ export default function New({ inventory, exchange_rate }: Props) {
   };
 
   const updateSale = async (id: string, sale: Sale) =>
-    await fetch("http://localhost:3000/api/tasks/" + id, {
+    await fetch("http://localhost:3000/api/sales/" + id, {
       method: "PUT",
       body: JSON.stringify(sale),
       headers: {
@@ -61,30 +65,38 @@ export default function New({ inventory, exchange_rate }: Props) {
       } else {
         createSale(sale);
       }
-      router.push("/");
+      router.push("/sales");
     } catch (error) {
       console.log(error);
     }
   };
   const loadSale = async (id: string) => {
     const res = await fetch("http://localhost:3000/api/sales/" + id);
-    const sale: Sale = await res.json();
-    setSale({
-      client: sale.client,
-      articles: sale.articles,
-      amount: sale.amount,
-      price_dolar: sale.price_dolar,
-      price_bs: sale.price_bs,
-      total_dolar: sale.total_dolar,
-      total_bs: sale.total_bs,
-      all_total_dolar: sale.all_total_dolar,
-      all_total_bs: sale.all_total_bs,
-    });
+    const saleR: Sale = await res.json();
+    sale.client = saleR.client;
+    sale.all_total_dolar = saleR.all_total_dolar;
+    sale.all_total_bs = saleR.all_total_bs;
+    setSale(sale);
+
+
+    const client = document.getElementById("client") as HTMLInputElement
+    const allTotalDolar = document.getElementById("all_total_dolar") as HTMLInputElement
+    const allTotalBs = document.getElementById("all_total_bs") as HTMLInputElement
+
+    client.value = String(sale.client);
+    allTotalDolar.value = String(sale.all_total_dolar);
+    allTotalBs.value = String(sale.all_total_bs);
+
+    for (let i = 1; i < saleR.articles.length; i++) {
+
+      camps[i] = <Camps key={"key" + Number(i + 1)} idCamps={Number(i + 1)} inventory={inventory} exchange_rate={exchange_rate}></Camps>;
+    }
+    setCamps([...camps])
+    console.log(camps.length)
+    console.log(saleR.articles.length)
   };
 
-  useEffect(() => {
-    if (typeof router.query.id === "string") loadSale(router.query.id);
-  }, [router.query]);
+
 
   return (
     <>
@@ -98,6 +110,7 @@ export default function New({ inventory, exchange_rate }: Props) {
               type="text"
               onChange={handleChange}
               placeholder="Nombre de cliente"
+              autoComplete="off"
             />
           </div>
           <table>
@@ -156,7 +169,7 @@ export default function New({ inventory, exchange_rate }: Props) {
           <button type="button" onClick={handleCamps}>
             add camp
           </button>
-          <button onClick={() => router.push("/inventory")} type="submit">
+          <button type="submit">
             guardar
           </button>
         </form>
