@@ -15,7 +15,6 @@ export interface Props {
 
 function New({ exchange_rate }: Props) {
   const router = useRouter();
-  let count: number = 1;
   const [article, setArticle] = useState<Article>(inititalState);
   const handleChange = ({
     target: { name, value },

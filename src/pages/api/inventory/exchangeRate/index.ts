@@ -3,7 +3,7 @@ import { conn } from "../../../../utils/database";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { method, body, query } = req;
+  const { method, body } = req;
 
   switch (method) {
     case "GET":

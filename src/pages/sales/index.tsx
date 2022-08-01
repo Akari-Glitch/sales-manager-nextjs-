@@ -1,6 +1,7 @@
 import React from 'react'
 import { useRouter } from "next/router";
 import { Sale } from '../../interfaces/Sale';
+import Cookies from "universal-cookie";
 
 interface Props {
   sales: Sale[];
@@ -8,8 +9,17 @@ interface Props {
 
 function Index({ sales }: Props) {
   const router = useRouter();
+
+  const handleLogout = () => {
+    const cookies = new Cookies();
+    cookies.remove("loggin")
+    cookies.set('logout', 'true', { path: '/' });
+    router.push("/")
+
+  }
   return (
     <>
+      <button onClick={handleLogout}>logout</button>
       <button onClick={() => router.push("/sales/new")}>Create one</button>
       <ul>
         {sales.map((sale, i) => {

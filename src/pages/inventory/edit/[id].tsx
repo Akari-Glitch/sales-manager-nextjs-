@@ -1,5 +1,5 @@
 import { ExChangeRate } from "../../../interfaces/ExchangeRate";
-import New from "../new";
+import New from "../../../components/inventory/new";
 
 export interface Props {
   exchange_rate: ExChangeRate[];

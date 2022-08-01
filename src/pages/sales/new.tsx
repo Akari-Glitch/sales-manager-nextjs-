@@ -4,7 +4,7 @@ import { SaleContext } from "../../context/SaleContext";
 import { Article } from "../../interfaces/Article";
 import { ExChangeRate } from "../../interfaces/ExchangeRate";
 import { Sale } from "../../interfaces/Sale";
-import Camps from "./camps";
+import Camps from "../../components/sales/camps";
 
 export interface Props {
   inventory: Article[];
@@ -57,6 +57,13 @@ export default function New({ inventory, exchange_rate }: Props) {
       },
     });
 
+  const handleDelete = async () => {
+    await fetch("http://localhost:3000/api/sales/" + router.query.id, {
+      method: "DELETE",
+    });
+    router.push("/sales");
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -78,7 +85,6 @@ export default function New({ inventory, exchange_rate }: Props) {
     sale.all_total_bs = saleR.all_total_bs;
     setSale(sale);
 
-
     const client = document.getElementById("client") as HTMLInputElement
     const allTotalDolar = document.getElementById("all_total_dolar") as HTMLInputElement
     const allTotalBs = document.getElementById("all_total_bs") as HTMLInputElement
@@ -88,12 +94,9 @@ export default function New({ inventory, exchange_rate }: Props) {
     allTotalBs.value = String(sale.all_total_bs);
 
     for (let i = 1; i < saleR.articles.length; i++) {
-
       camps[i] = <Camps key={"key" + Number(i + 1)} idCamps={Number(i + 1)} inventory={inventory} exchange_rate={exchange_rate}></Camps>;
     }
     setCamps([...camps])
-    console.log(camps.length)
-    console.log(saleR.articles.length)
   };
 
 
@@ -172,6 +175,14 @@ export default function New({ inventory, exchange_rate }: Props) {
           <button type="submit">
             guardar
           </button>
+          {router.query.id ? (
+            <button
+              type="button"
+              onClick={handleDelete}
+            >
+              delete
+            </button>
+          ) : null}
         </form>
       </div>
     </>
