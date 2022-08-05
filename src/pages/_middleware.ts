@@ -12,11 +12,12 @@ export default function middleware(req: NextApiRequest) {
   if (
     verifyLogout === "true" &&
     (url.includes("http://localhost:3000/sales") ||
-      url.includes("http://localhost:3000/inventory"))
+      url.includes("http://localhost:3000/inventory") ||
+      url.includes("http://localhost:3000/home"))
   ) {
     return NextResponse.redirect("http://localhost:3000/");
   }
   if (verifyLoggin === "true" && url === "http://localhost:3000/") {
-    return NextResponse.redirect("http://localhost:3000/sales");
+    return NextResponse.redirect("http://localhost:3000/home");
   }
 }

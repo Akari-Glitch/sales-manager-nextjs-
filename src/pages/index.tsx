@@ -2,7 +2,8 @@ import { FormEvent, useState } from "react";
 import Cookies from "universal-cookie";
 import jwt from "jsonwebtoken"
 import { useRouter } from "next/router";
-
+import Image from "next/image";
+import { StylesLogin } from "../styles/login/StylesLogin"
 
 export default function Home() {
   const router = useRouter();
@@ -30,7 +31,7 @@ export default function Home() {
         const cookies = new Cookies();
         if (cookies.get('logout') === 'true') cookies.remove('logout')
         cookies.set('loggin', 'true', { path: '/' });
-        router.push("/sales")
+        router.push("/home")
       } else {
         setMessage(`Welcome ${username} and you are  no admin`)
 
@@ -40,14 +41,26 @@ export default function Home() {
     }
   }
   return (
-    <>
-      <h1>{message}</h1>
-      <form method="POST" onSubmit={handleSubmit}>
-        <input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)} />
-        <br />
-        <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)} />
-        <input type="submit" value="login" />
+    <StylesLogin>
+      <div className="form-title">
+        <Image className="img-huevo" width="210px" height="230px" src="/../public/img/huevo.jpg" alt="" />
+        <h1><span className="title-symbol">¡</span>Bienvenido a <span className="text-admin">isla Fea</span> <span className="title-symbol">!</span></h1>
+      </div>
+      <form method="POST" onSubmit={handleSubmit} className="form-container">
+        <div className="inputs-container">
+          <div className="input-container">
+            <label htmlFor="username">Username</label>
+            <input type="text" id="username" name="username" value={username} onChange={e => setUsername(e.target.value)} autoComplete="off" />
+          </div>
+          <div className="input-container">
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" name="password" value={password} onChange={e => setPassword(e.target.value)} autoComplete="off" />
+          </div>
+        </div>
+        <div className='submit-container'>
+          <input className="submit-button" type="submit" value="Login" />
+        </div>
       </form>
-    </>
+    </StylesLogin>
   );
 }

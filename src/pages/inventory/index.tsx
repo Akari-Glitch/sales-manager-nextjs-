@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { Article } from "../../interfaces/Article";
 import { ExChangeRate } from "../../interfaces/ExchangeRate";
 import ExchangeRate from "./exchangeRate";
-
+import { StylesInventory } from "../../styles/inventory/StylesInventory";
 export interface Props {
   inventory: Article[];
   exchange_rate: ExChangeRate[];
@@ -12,20 +12,24 @@ function Inventory({ inventory, exchange_rate }: Props) {
   //exchangeRate value
   const exrValue = exchange_rate[0].exchange_rate;
   return (
-    <div>
-      Inventory
+    <StylesInventory>
+      <h1 className="title">Inventory</h1>
       <ExchangeRate exchange_rate={exrValue}></ExchangeRate>
+      <div className="button-container">
+      <button onClick={() => router.push("/inventory/new")}>add article</button>
+      </div>
+    <div className="table-container">
       <table>
         <tbody>
           <tr>
             <td>
-              <h1>Articulo</h1>
+              <span>Articulo</span>
             </td>
             <td>
-              <h1>Precio Dolar</h1>
+              <span>Precio Dolar</span>
             </td>
             <td>
-              <h1>Precio Bs</h1>
+              <span>Precio Bs</span>
             </td>
           </tr>
           {inventory.map((article) => {
@@ -45,8 +49,8 @@ function Inventory({ inventory, exchange_rate }: Props) {
           })}
         </tbody>
       </table>
-      <button onClick={() => router.push("/inventory/new")}>add article</button>
-    </div>
+      </div>
+    </StylesInventory>
   );
 }
 

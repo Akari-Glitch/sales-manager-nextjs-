@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { StylesExchangeRate } from "../../../styles/inventory/StylesExchangeRate"
 
 export interface Props {
   exchange_rate: Number;
@@ -9,7 +10,7 @@ function ExchangeRate({ exchange_rate }: Props) {
   const router = useRouter();
 
   return (
-    <div>
+    <StylesExchangeRate>
       <label htmlFor="exchange_rate">Tasa del dolar</label>
       <input
         id="exchange_rate"
@@ -21,7 +22,7 @@ function ExchangeRate({ exchange_rate }: Props) {
         step="0.01"
         readOnly
       ></input>
-    </div>
+    </StylesExchangeRate>
   );
 }
 

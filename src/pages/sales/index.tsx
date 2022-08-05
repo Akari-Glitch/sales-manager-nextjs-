@@ -2,7 +2,7 @@ import React from 'react'
 import { useRouter } from "next/router";
 import { Sale } from '../../interfaces/Sale';
 import Cookies from "universal-cookie";
-
+import {StylesSales} from "../../styles/sales/StylesSales"
 interface Props {
   sales: Sale[];
 }
@@ -18,7 +18,7 @@ function Index({ sales }: Props) {
 
   }
   return (
-    <>
+    <StylesSales>
       <button onClick={handleLogout}>logout</button>
       <button onClick={() => router.push("/sales/new")}>Create one</button>
       <ul>
@@ -43,7 +43,7 @@ function Index({ sales }: Props) {
           )
         })}
       </ul>
-    </>
+    </StylesSales>
   )
 }
 export default Index

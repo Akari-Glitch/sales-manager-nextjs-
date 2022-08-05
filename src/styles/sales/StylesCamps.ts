@@ -14,9 +14,14 @@ export const StylesCamps = styled.tr`
   .list-none{
     display:none;
    }
-  }
+  
 
   .li{
     background:green;
   }
+
+  @media only screen and (min-width: 1024px) {
+    
+  }
+
 `;

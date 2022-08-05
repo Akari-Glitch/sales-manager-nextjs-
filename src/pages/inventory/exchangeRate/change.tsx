@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import { StylesExchangeRate } from "../../../styles/inventory/StylesExchangeRate"
 
 function Change() {
   const [exchange_rate, setExchange_rate] = useState(0);
@@ -25,20 +26,22 @@ function Change() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="exchange_rate">Tasa del dolar</label>
-      <input
-        id="exchange_rate"
-        name="exchange_rate"
-        placeholder="tasa de cambio"
-        type="number"
-        step="0.01"
-        onChange={handleChange}
-      ></input>
-      <button onClick={() => router.push("/inventory")} type="submit">
-        guardar
-      </button>
-    </form>
+    <StylesExchangeRate>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="exchange_rate">Tasa del dolar</label>
+        <input
+          id="exchange_rate"
+          name="exchange_rate"
+          placeholder="tasa de cambio"
+          type="number"
+          step="0.01"
+          onChange={handleChange}
+        ></input>
+        <button onClick={() => router.push("/inventory")} type="submit">
+          guardar
+        </button>
+      </form>
+    </StylesExchangeRate>
   );
 }
 
