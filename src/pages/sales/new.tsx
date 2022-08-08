@@ -5,6 +5,7 @@ import { Article } from "../../interfaces/Article";
 import { ExChangeRate } from "../../interfaces/ExchangeRate";
 import { Sale } from "../../interfaces/Sale";
 import Camps from "../../components/sales/camps";
+import { StylesSales } from "../../styles/sales/StylesSales"
 
 export interface Props {
   inventory: Article[];
@@ -102,7 +103,7 @@ export default function New({ inventory, exchange_rate }: Props) {
 
 
   return (
-    <>
+    <StylesSales>
       <div className="container-form">
         <form onSubmit={handleSubmit}>
           <div className="container-client-name">
@@ -116,59 +117,61 @@ export default function New({ inventory, exchange_rate }: Props) {
               autoComplete="off"
             />
           </div>
-          <table>
-            <tbody id="camps-container">
-              <tr className="container-names-columns">
-                <td>
-                  <h1>Articulo</h1>
-                </td>
-                <td>
-                  <h1>Cantidad</h1>
-                </td>
-                <td>
-                  <h1>Precio $</h1>
-                </td>
-                <td>
-                  <h1>Precio Bs</h1>
-                </td>
-                <td>
-                  <h1>Total $</h1>
-                </td>
-                <td>
-                  <h1>Total Bs</h1>
-                </td>
-                <td></td>
-              </tr>
-              {camps}
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                  <input
-                    id="all_total_dolar"
-                    name="all_total_dolar"
-                    placeholder="monto total dolar"
-                    type="number"
-                    step="0.01"
-                    readOnly
-                  />
-                </td>
-                <td>
-                  <input
-                    id="all_total_bs"
-                    name="all_total_bs"
-                    placeholder="monto total bs"
-                    type="number"
-                    step="0.01"
-                    readOnly
-                  />
-                </td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="table-container table-container-sales">
+            <table>
+              <tbody id="camps-container">
+                <tr className="container-names-columns">
+                  <td>
+                    <span>Articulo</span>
+                  </td>
+                  <td>
+                    <span>Cantidad</span>
+                  </td>
+                  <td>
+                    <span>Precio $</span>
+                  </td>
+                  <td>
+                    <span>Precio Bs</span>
+                  </td>
+                  <td>
+                    <span>SubTotal $</span>
+                  </td>
+                  <td>
+                    <span>SubTotal Bs</span>
+                  </td>
+                  <td></td>
+                </tr>
+                {camps}
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <input
+                      id="all_total_dolar"
+                      name="all_total_dolar"
+                      placeholder="monto total dolar"
+                      type="number"
+                      step="0.01"
+                      readOnly
+                    />
+                  </td>
+                  <td>
+                    <input
+                      id="all_total_bs"
+                      name="all_total_bs"
+                      placeholder="monto total bs"
+                      type="number"
+                      step="0.01"
+                      readOnly
+                    />
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <button type="button" onClick={handleCamps}>
             add camp
           </button>
@@ -185,7 +188,7 @@ export default function New({ inventory, exchange_rate }: Props) {
           ) : null}
         </form>
       </div>
-    </>
+    </StylesSales>
   );
 }
 

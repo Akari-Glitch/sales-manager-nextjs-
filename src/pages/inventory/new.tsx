@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Article } from "../../interfaces/Article";
 import { ExChangeRate } from "../../interfaces/ExchangeRate";
-
+import { StylesNew } from "../../styles/inventory/StylesNew"
 const inititalState: Article = {
   article: "",
   price_dolar: 0,
@@ -86,73 +86,79 @@ function New({ exchange_rate }: Props) {
   }, [router.query]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <h1>Articulo</h1>
-            </td>
-            <td>
-              <h1>Precio Dolar</h1>
-            </td>
-            <td>
-              <h1>Precio Bs</h1>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input
-                placeholder="articulo"
-                name="article"
-                onChange={handleChange}
-                type="text"
-                value={article.article}
-                autoComplete="off"
-              />
-            </td>
-            <td>
-              <input
-                placeholder="precio dolar"
-                name="price_dolar"
-                onChange={handleChange}
-                value={article.price_dolar}
-                step="0.01"
-                type="number"
-                autoComplete="off"
-              />
-            </td>
-            <td>
-              <input
-                placeholder="precio bs"
-                name="price_bs"
-                onChange={handleChange}
-                value={(article.price_dolar * exrValue).toFixed(2)}
-                step="0.01"
-                type="number"
-                autoComplete="off"
-                readOnly
-              />
-            </td>
+    <StylesNew>
+      <form onSubmit={handleSubmit}>
+        <div className="table-container">
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <span>Articulo</span>
+                </td>
+                <td>
+                  <span>Precio Dolar</span>
+                </td>
+                <td>
+                  <span>Precio Bs</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    placeholder="articulo"
+                    name="article"
+                    onChange={handleChange}
+                    type="text"
+                    value={article.article}
+                    autoComplete="off"
+                  />
+                </td>
+                <td>
+                  <input
+                    placeholder="precio dolar"
+                    name="price_dolar"
+                    onChange={handleChange}
+                    value={article.price_dolar}
+                    step="0.01"
+                    type="number"
+                    autoComplete="off"
+                  />
+                </td>
+                <td>
+                  <input
+                    placeholder="precio bs"
+                    name="price_bs"
+                    onChange={handleChange}
+                    value={(article.price_dolar * exrValue).toFixed(2)}
+                    step="0.01"
+                    type="number"
+                    autoComplete="off"
+                    readOnly
+                  />
+                </td>
 
-            {router.query.id ? (
-              <td>
-                <button
-                  type="button"
-                  id={String(article.id)}
-                  onClick={handleDelete}
-                >
-                  delete
-                </button>
-              </td>
-            ) : null}
-          </tr>
-        </tbody>
-      </table>
-      <button onClick={() => router.push("/inventory")} type="submit">
-        guardar
-      </button>
-    </form>
+                {router.query.id ? (
+                  <td>
+                    <button
+                      type="button"
+                      id={String(article.id)}
+                      onClick={handleDelete}
+                    >
+                      delete
+                    </button>
+                  </td>
+                ) : null}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="button-container">
+          <button onClick={() => router.push("/inventory")} type="submit">
+            guardar
+          </button>
+        </div>
+      </form>
+    </StylesNew>
   );
 }
 

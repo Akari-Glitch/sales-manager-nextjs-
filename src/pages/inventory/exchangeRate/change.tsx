@@ -28,7 +28,7 @@ function Change() {
   return (
     <StylesExchangeRate>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="exchange_rate">Tasa del dolar</label>
+        <label className="title" htmlFor="exchange_rate">Tasa del dolar</label>
         <input
           id="exchange_rate"
           name="exchange_rate"
@@ -37,9 +37,11 @@ function Change() {
           step="0.01"
           onChange={handleChange}
         ></input>
+        <div className="button-container">
         <button onClick={() => router.push("/inventory")} type="submit">
           guardar
         </button>
+        </div>
       </form>
     </StylesExchangeRate>
   );

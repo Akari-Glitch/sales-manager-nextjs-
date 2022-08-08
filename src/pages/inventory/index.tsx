@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { Article } from "../../interfaces/Article";
 import { ExChangeRate } from "../../interfaces/ExchangeRate";
 import ExchangeRate from "./exchangeRate";
-import { StylesInventory } from "../../styles/inventory/StylesInventory";
 export interface Props {
   inventory: Article[];
   exchange_rate: ExChangeRate[];
@@ -12,45 +11,45 @@ function Inventory({ inventory, exchange_rate }: Props) {
   //exchangeRate value
   const exrValue = exchange_rate[0].exchange_rate;
   return (
-    <StylesInventory>
+    <div>
       <h1 className="title">Inventory</h1>
       <ExchangeRate exchange_rate={exrValue}></ExchangeRate>
       <div className="button-container">
-      <button onClick={() => router.push("/inventory/new")}>add article</button>
+        <button onClick={() => router.push("/inventory/new")}>add article</button>
       </div>
-    <div className="table-container">
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <span>Articulo</span>
-            </td>
-            <td>
-              <span>Precio Dolar</span>
-            </td>
-            <td>
-              <span>Precio Bs</span>
-            </td>
-          </tr>
-          {inventory.map((article) => {
-            return (
-              <>
-                <tr
-                  key={"key" + String(article.id)}
-                  id={String(article.id)}
-                  onClick={() => router.push(`/inventory/edit/` + article.id)}
-                >
-                  <td>{article.article}</td>
-                  <td>{article.price_dolar}</td>
-                  <td>{article.price_bs}</td>
-                </tr>
-              </>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className="table-container">
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <span>Articulo</span>
+              </td>
+              <td>
+                <span>Precio Dolar</span>
+              </td>
+              <td>
+                <span>Precio Bs</span>
+              </td>
+            </tr>
+            {inventory.map((article) => {
+              return (
+                <>
+                  <tr
+                    key={"key" + String(article.id)}
+                    id={String(article.id)}
+                    onClick={() => router.push(`/inventory/edit/` + article.id)}
+                  >
+                    <td>{article.article}</td>
+                    <td>{article.price_dolar}</td>
+                    <td>{article.price_bs}</td>
+                  </tr>
+                </>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
-    </StylesInventory>
+    </div>
   );
 }
 

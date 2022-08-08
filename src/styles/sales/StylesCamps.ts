@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 export const StylesCamps = styled.tr`
   .article {
     position: relative;
-    background: blue;
   }
   .list {
     position: absolute;
@@ -11,17 +10,14 @@ export const StylesCamps = styled.tr`
     top: 5px;
     z-index: 1;
   }
-  .list-none{
-    display:none;
-   }
-  
+  .list-none {
+    display: none;
+  }
 
-  .li{
-    background:green;
+  .li {
+    background: green;
   }
 
   @media only screen and (min-width: 1024px) {
-    
   }
-
 `;
